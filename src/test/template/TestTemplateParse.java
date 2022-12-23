@@ -3,25 +3,36 @@ package test.template;
 import main.template.TemplateParse;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class TestTemplateParse {
-
     @Test
     public void emptyTemplateRendersAsEmptyString() throws Exception {
-        TemplateParse parse = new TemplateParse();
-        List<String> segments = parse.parse("");
-        assertEquals("Number of segments", 1, segments.size());
-        assertEquals("", segments.get(0));
+        List<String> segments = parse("");
+        assertSegments(segments, "");
     }
 
     @Test
     public void templateWithOnlyPlainText() throws Exception {
-        TemplateParse parse = new TemplateParse();
-        List<String> segments = parse.parse("plain text only");
-        assertEquals("Number of segments", 1, segments.size());
-        assertEquals("plain text only", segments.get(0));
+        List<String> segments = parse("plain text only");
+        assertSegments(segments, "plain text only");
+    }
+
+    @Test
+    public void parsingMultipleVariables() throws Exception {
+        List<String> segments = parse("${a}:${b}:${c}");
+        assertSegments(segments, "${a}", ":", "${b}", ":", "${c}");
+    }
+
+    private List<String> parse(String template) {
+        return new TemplateParse().parse(template);
+    }
+
+    private void assertSegments(List<? extends Object> actual, Object... expected) {
+        assertEquals("Number of segments doesn't match", expected.length, actual.size());
+        assertEquals(Arrays.asList(expected), actual);
     }
 }
