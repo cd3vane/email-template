@@ -1,6 +1,9 @@
 package test.template;
 
+import main.template.PlainText;
+import main.template.Segment;
 import main.template.TemplateParse;
+import main.template.Variable;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -27,6 +30,15 @@ public class TestTemplateParse {
         assertSegments(segments, "${a}", ":", "${b}", ":", "${c}");
     }
 
+    @Test
+    public void parsingTemplateIntoSegmentObjects() throws Exception {
+        TemplateParse p = new TemplateParse();
+        List<Segment> segments = p.parseSegments("a ${b} c ${d}");
+        assertSegments(segments,
+                        new PlainText("a "), new Variable("b"),
+                        new PlainText(" c "), new Variable("d"));
+    }
+
     private List<String> parse(String template) {
         return new TemplateParse().parse(template);
     }
@@ -35,4 +47,6 @@ public class TestTemplateParse {
         assertEquals("Number of segments doesn't match", expected.length, actual.size());
         assertEquals(Arrays.asList(expected), actual);
     }
+
+
 }
