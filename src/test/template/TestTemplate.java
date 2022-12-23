@@ -1,7 +1,7 @@
 package test.template;
 
-import main.MissingValueException;
-import main.Template;
+import main.template.MissingValueException;
+import main.template.Template;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

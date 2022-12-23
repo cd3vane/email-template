@@ -1,6 +1,6 @@
 package test.template;
 
-import main.Template;
+import main.template.Template;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
